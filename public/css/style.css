@@ -3,7 +3,7 @@
   }
   
   body{
-    background:#92bde7;
+    background:#03203C;
     color:#485e74;
     line-height:1.6;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -39,7 +39,8 @@
   }
   
   .company-info{
-    background:#c9e6ff;
+    background:#120E43;
+    color:white;
   }
   
   .company-info h3, .company-info ul{
@@ -77,14 +78,15 @@
   }
   
   .contact form button{
-    background:#c9e6ff;
+    background:#120E43;
+    color: white;
     border:0;
     text-transform: uppercase;
   }
   
   .contact form button:hover,.contact form button:focus{
     background:#92bde7;
-    color:#fff;
+    color:black;
     outline:0;
     transition: background-color 2s ease-out;
   }
@@ -106,5 +108,9 @@
   }
 
   a{
-      color:#485e74;
+      color:white;
   }
+ .login >a{
+   color:#120E43;
+ }
+

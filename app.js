@@ -13,34 +13,41 @@ const authRoutes = require('./routes/auth');
 
 
 //Connecting with the Database Locally
-mongoose.connect(process.env.DATABASE, {
-    useNewUrlParser:true,               //Extra attributes to make db more efficient.
-    useUnifiedTopology: true,
-    useCreateIndex: true 
-}).then(()=> {                          //In JavaScript -> run().then().catch()
-    console.log("DB CONNECTED");
-}).catch(()=>{
-    console.log("You Screwed it up ! ");
-})
+mongoose.connect(process.env.DATABASE, {useNewUrlParser:true, useUnifiedTopology: true,useCreateIndex: true })
+.then(()=> {console.log("DB CONNECTED");})
+.catch(()=>{console.log("You Screwed it up ! ");})
+
 // view engine setup
 app.engine('handlebars',expressHandlebars({ extname: "hbs", defaultLayout: false, layoutsDir: "views/ "}));
 app.set('view engine','handlebars');
 
-//<----------MIDDLEWARE------------>
-app.use(express.json());                //req.body 
-app.use(cookieParser());                //req.cookies
+//static folder
+app.use(express.static(__dirname + '/public'));
+
+//MIDDLEWARE
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());                 
+app.use(cookieParser());                
 app.use(cors());
-//<----------MIDDLEWARE------------>
+
+
 app.get('/',(req,res)=>{
+    res.render('login');
+})
+app.get('/signup',(req,res)=>{
     res.render('contact');
 })
+app.get('/register',(req,res)=>{
+    res.render('otp');
+})
+app.get('/verify',(req,res)=>{
+    res.render('verify');
+})
 
-//<----------Routes---------------->
-app.use('/', authRoutes);             //prefixing /api in all the routes which is mentioned in authRoutes i.e auth.js
 
+//Routes
+app.use('/', authRoutes);             
 
-
-//<----------Routes---------------->
 
 
 //Port

@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>OTP</title>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 class="brand"><span>Welcome User </span> Enter OTP</h1>
+    <div class="wrapper animated bounceInLeft">
+      <div class="company-info">
+        <h3>Shubham Singh</h3>
+        <ul>
+          <li><i class="fa fa-road"></i> CS Undergrad Student </li>
+          <li><i class="fa fa-phone"></i> 2018-2022</li>
+          <li><i class="fa fa-envelope"></i><a href="http://shubhamdev.netlify.app"> shubhamdev</a></li>
+        </ul>
+      </div>
+      <div class="contact">
+        <h3>Enter OTP</h3>
+            <form action="verify" method="POST">
+            <input name="pin" required="" type="number" placeholder="1234" />
+            <input name="requestId" type="hidden" value="<%= requestId %>" />
+            <input type="submit" value="Verify PIN" />
+            </form>   
+      </div>
+    </div>
+  </div>
+</body>
+</html>

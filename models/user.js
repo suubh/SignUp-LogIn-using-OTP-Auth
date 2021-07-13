@@ -21,29 +21,51 @@ const userSchema = new mongoose.Schema({
         required:true,
         unique:true,
     },
-    userinfo:{
+    dob:{
         type:String,
-        trim:true
+        required:true
     },
-    encry_password:{                //Which we are going to store in out DB
+    education:{
+        type:String,
+        required:true
+    },
+    street:{
+        type:String,
+        required:true
+    },
+    houseNum:{
+        type:String
+    },
+    pin:{
+        type:Number,
+        required:true
+    },
+    city:{
+        type:String,
+    },
+    state:{
+        type:String,
+        required:true
+    },
+    country:{
+        type:String,
+        required:true
+    },
+    encry_password:{                //Which we are going to store in our DB
         type:String,
         required:true
     },
     salt: String,                   //For Password aunthetication
-    role:{
-        type:Number,
-        default:0,                  //Higher the Number ,higher is the role.
-    },
-    purchases:{ 
-        type:Array,
-        default:[]
-    },
+    upload:{
+        data: Buffer,
+        type: String
+    }
 },{timestamps:true});
 
 userSchema.virtual("password")
     .set(function(password){
-        this._password = password;  //_Private Variable, In case we have to use the actual password set by the user.
-        this.salt = uuidv1();       //Populating the Salt value, Which will give something like this - '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'.
+        this._password = password;  
+        this.salt = uuidv1();      
         this.encry_password = this.securePassword(password) ;   //Calling the Encryption method
     })
     .get(function(){
@@ -70,7 +92,5 @@ userSchema.methods = {
 
 }
 
-
-//Now using the above created Schema to make Model to use in the Application.
 module.exports = mongoose.model("User",userSchema); //  User is the name which will be used to call the values or the schema.
 

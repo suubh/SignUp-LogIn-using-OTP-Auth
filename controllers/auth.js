@@ -1,33 +1,72 @@
-//Route and Controller name should be same to avoid confusion
-//All the auth method are in auth controller
+
 const expressHandler = require('express-handlebars');
-const User = require("../models/user");         //My model to save the user in DB       
+const User = require("../models/user");         //My model to save the user in DB  
+const Nexmo = require('nexmo');
+const nexmo = new Nexmo({
+    apiKey: "7a89cf26",
+    apiSecret: "GlrcrbRV4uRf4s2P"
+});
 
-
+exports.login = (req,res)=>{
+    if(User.findOne({ email: req.body.email }) && User.findOne({ password: req.body.password })){
+        return res.send("User Logged In Successfully !");
+    } else{
+        return res.send("Invalid User");
+    }
+    //Proper Implementation can be done with time.
+}
 
 exports.signup = (req, res)=>{
-    const user = new User(req.body);            //Consider 'user' as an object of 'User' ,and User is from mongoose schema so we
-    user.save((err, user)=>{                    //can use mongoose property i.e     user.save() -> Give us tow objects back i.e err and user itself
-                            
+    const user = new User(req.body);           
+    user.save((err, user)=>{                                       
         if(err){
             return res.status(400).json({
                 err: "Not able to Save user in DataBase"
             });
         }
-        //res.json(user); -> Will show us the entire model .
-        res.json({
-            name: user.name,
-            email: user.email,
-            id: user._id
-        });
-
+        res.render('otp');
     }); 
 };
 
-
-
-exports.signout = (req, res)=>{
-    res.json({
-        message:"User Singout"
+exports.register = (req,res)=>{
+    let phoneNumber = req.body.number;
+    console.log(phoneNumber);
+    nexmo.verify.request({number: phoneNumber,brand: 'Shubham Singh'},(err,result)=>{
+        if(err){
+            res.sendStatus(500);
+        }
+        else{
+            let requestId = result.request_id;
+            if(result.status == '0'){
+                res.render('verify',{requestId: requestId});
+                console.log(requestId);
+            } else{
+                res.status(401).send(result.error_text);
+            }
+        }
     });
-};
+}
+
+exports.verify = (req,res)=>{
+    let pin = req.body.pin;
+    console.log(pin);
+    let requestId = req.body.requestId;
+
+    nexmo.verify.check({request_id: requestId, code: pin},(err,result)=>{
+        if(err){
+            res.send('Server Error');
+        }
+        else{
+            if(result && result.status == '0'){
+                res.status(200).send('Account Verified !');
+                res.render('login',{message: "Account Verified,Please Login"});
+            } else{
+                res.send('Account Verified,Please Login');
+            }
+        }
+    });
+}
+
+
+
+
