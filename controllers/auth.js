@@ -3,8 +3,8 @@ const expressHandler = require('express-handlebars');
 const User = require("../models/user");         //My model to save the user in DB  
 const Nexmo = require('nexmo');
 const nexmo = new Nexmo({
-    apiKey: "7a89cf26",
-    apiSecret: "GlrcrbRV4uRf4s2P"
+    apiKey: "YOUR_API_KEY",
+    apiSecret: "YOUR_API_SECRET"
 });
 
 exports.login = (req,res)=>{
@@ -61,7 +61,7 @@ exports.verify = (req,res)=>{
                 res.status(200).send('Account Verified !');
                 res.render('login',{message: "Account Verified,Please Login"});
             } else{
-                res.send('Account Verified,Please Login');
+                res.send('Try Again');
             }
         }
     });
