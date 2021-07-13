@@ -4,5 +4,5 @@
 - `npm install`
 - `npm start`
 
-### It is a sign up and log in application using OTP.
+### It is a sign up and log in application using OTP authentication.
  - It uses [Voyage API](https://www.voyageone.com/docs/api/index.html) to send OTP for trial,so do create your `apiKey` and `apiSecret`.
